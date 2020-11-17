@@ -1,7 +1,7 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 
-const mode = process.env.NODE_ENV || 'production'
+const mode = process.env.NODE_ENV || 'production';
 
 module.exports = {
     output: {
@@ -24,4 +24,4 @@ module.exports = {
             },
         ],
     },
-}
+};
