@@ -1,4 +1,4 @@
-import { handleRequest as adminPage } from './admin';
+import { handleRequest as apiPage } from './api';
 import { handleRequest as redirectPage } from './redirect';
 
 const rootPage: NestedHandler = async (req, path) => {
@@ -11,8 +11,8 @@ export const handleRequest: NestedHandler = async (req, path) => {
         return rootPage(req, path);
     }
     // handle /admin/*
-    if (path.startsWith('/admin')) {
-        return adminPage(req, path.slice('/admin'.length));
+    if (path.startsWith('/api')) {
+        return apiPage(req, path.slice('/api'.length));
     }
     // handle /*
     return redirectPage(req, path.slice('/'.length));
