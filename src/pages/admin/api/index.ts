@@ -1,3 +1,3 @@
-export async function handleRequest(request: Request): Promise<Response> {
+export const handleRequest: NestedHandler = async (req, path) => {
     return new Response(`api, path: ${path}`);
-}
+};
