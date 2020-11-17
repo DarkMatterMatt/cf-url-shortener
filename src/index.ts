@@ -1,5 +1,6 @@
-import { handleRequest } from './handler'
+import { handleRequest as rootPage } from './pages';
 
 addEventListener('fetch', (event) => {
-    event.respondWith(handleRequest(event.request))
-})
+    const url = new URL(event.request.url);
+    event.respondWith(rootPage(event.request, url.pathname));
+});
