@@ -15,7 +15,7 @@ export const handleRequest: NestedHandler = async (req, path) => {
         return adminPage(req, path.slice('/admin'.length));
     }
     // handle /*
-    return redirectPage(req, path);
+    return redirectPage(req, path.slice('/'.length));
 };
 
 addEventListener('fetch', (event) => {
