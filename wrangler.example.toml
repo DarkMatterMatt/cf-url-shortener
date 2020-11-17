@@ -1,0 +1,13 @@
+type = "webpack"
+account_id = "0123456789abcdef0123456789abcdef"
+zone_id = "0123456789abcdef0123456789abcdef"
+webpack_config = "webpack.config.js"
+
+name = "url-shortener-dev"
+vars = { ENVIRONMENT = "dev" }
+route = "go-dev.example.com/*"
+
+[env.production]
+name = "url-shortener"
+vars = { ENVIRONMENT = "production" }
+route = "go.example.com/*"
