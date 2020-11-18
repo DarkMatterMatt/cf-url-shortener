@@ -1,3 +1,4 @@
 export const handleRequest: NestedHandler = async (req, path) => {
-    return new Response(`redirect, path: ${path}`);
+    const shortName = path.slice('/'.length);
+    return new Response(`redirect, shortName: ${shortName}`);
 };

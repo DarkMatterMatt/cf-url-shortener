@@ -10,12 +10,12 @@ export const handleRequest: NestedHandler = async (req, path) => {
     if (path === '/') {
         return rootPage(req, path);
     }
-    // handle /admin/*
-    if (path.startsWith('/api')) {
+    // handle /api
+    if (path === '/api' || path.startsWith("/api/")) {
         return apiPage(req, path.slice('/api'.length));
     }
     // handle /*
-    return redirectPage(req, path.slice('/'.length));
+    return redirectPage(req, path);
 };
 
 addEventListener('fetch', (event) => {
