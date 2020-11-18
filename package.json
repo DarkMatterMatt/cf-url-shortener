@@ -1,6 +1,6 @@
 {
     "name": "url-shortener",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "URL shortener",
     "main": "dist/worker.js",
     "scripts": {
@@ -16,24 +16,24 @@
     "author": "Matt Moran",
     "license": "GPL-3.0",
     "devDependencies": {
-        "@cloudflare/workers-types": "^2.0.0",
-        "@types/chai": "^4.2.11",
+        "@cloudflare/workers-types": "^2.1.0",
+        "@types/chai": "^4.2.14",
         "@types/mocha": "^7.0.2",
-        "@typescript-eslint/eslint-plugin": "^4.8.0",
-        "@typescript-eslint/parser": "^4.8.0",
+        "@typescript-eslint/eslint-plugin": "^4.8.1",
+        "@typescript-eslint/parser": "^4.8.1",
         "chai": "^4.2.0",
         "cross-env": "^7.0.2",
         "eslint": "^7.13.0",
         "eslint-config-prettier": "^6.15.0",
         "mocha": "^8.2.1",
-        "prettier": "^2.0.5",
+        "prettier": "^2.1.2",
         "prettier-eslint": "^11.0.0",
         "prettier-eslint-cli": "^5.0.0",
         "rimraf": "^3.0.2",
         "service-worker-mock": "^2.0.5",
         "ts-loader": "^7.0.5",
         "typescript": "^3.9.7",
-        "webpack": "^4.43.0",
+        "webpack": "^4.44.2",
         "webpack-cli": "^3.3.12"
     }
 }
