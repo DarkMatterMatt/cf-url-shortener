@@ -17,3 +17,8 @@ type ApiSuccess = {
     status: "success";
     result: string | number | Record<string, any>;
 }
+
+interface RedirectMetadata {
+    version: number;
+    createdAt: number;
+}

@@ -6,8 +6,14 @@ webpack_config = "webpack.config.js"
 name = "url-shortener-dev"
 vars = { ENVIRONMENT = "dev" }
 route = "go-dev.example.com/*"
+kv_namespaces = [
+	 { binding = "REDIRECTS", id = "0123456789abcdef0123456789abcdef", preview_id = "0123456789abcdef0123456789abcdef"  }
+]
 
 [env.production]
 name = "url-shortener"
 vars = { ENVIRONMENT = "production" }
 route = "go.example.com/*"
+kv_namespaces = [
+	 { binding = "REDIRECTS", id = "fedcba9876543210fedcba9876543210" }
+]
