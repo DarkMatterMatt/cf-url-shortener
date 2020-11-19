@@ -4,7 +4,7 @@ import { handleRequest as deletePage } from './delete';
 import { isValidJwt } from "../../helpers";
 
 export const handleRequest: NestedHandler = async (req, path) => {
-    if (!isValidJwt(req)) {
+    if (!await isValidJwt(req)) {
         return status403(req);
     }
 
