@@ -1,3 +1,5 @@
+declare module '*.html';
+
 type Handler = (
     request: Request,
 ) => Promise<Response>;

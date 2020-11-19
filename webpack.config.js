@@ -14,14 +14,18 @@ module.exports = {
         plugins: [],
     },
     module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
-                options: {
-                    transpileOnly: true,
-                },
+        rules: [{
+            test: /\.tsx?$/,
+            loader: 'ts-loader',
+            options: {
+                transpileOnly: true,
             },
+        }, {
+            test: /\.html$/,
+            use: [{
+                loader: 'raw-loader',
+            }],
+        },
         ],
     },
 };

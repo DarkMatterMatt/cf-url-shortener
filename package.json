@@ -1,6 +1,6 @@
 {
     "name": "url-shortener",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "URL shortener",
     "main": "dist/worker.js",
     "scripts": {
@@ -29,6 +29,7 @@
         "prettier": "^2.1.2",
         "prettier-eslint": "^11.0.0",
         "prettier-eslint-cli": "^5.0.0",
+        "raw-loader": "^4.0.2",
         "rimraf": "^3.0.2",
         "service-worker-mock": "^2.0.5",
         "ts-loader": "^7.0.5",

@@ -1,4 +1,5 @@
 import { handleRequest as apiPage } from './api';
+import { handleRequest as adminPage } from './admin';
 import { handleRequest as redirectPage } from './redirect';
 
 const rootPage: NestedHandler = async (req, path) => {
@@ -13,6 +14,10 @@ export const handleRequest: NestedHandler = async (req, path) => {
     // handle /api
     if (path === '/api' || path.startsWith("/api/")) {
         return apiPage(req, path.slice('/api'.length));
+    }
+    // handle /admin
+    if (path === '/admin' || path.startsWith("/admin/")) {
+        return adminPage(req, path.slice('/admin'.length));
     }
     // handle /*
     return redirectPage(req, path);
