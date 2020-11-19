@@ -4,7 +4,7 @@ zone_id = "0123456789abcdef0123456789abcdef"
 webpack_config = "webpack.config.js"
 
 name = "url-shortener-dev"
-vars = { ENVIRONMENT = "dev" }
+vars = { ENVIRONMENT = "dev", GOOGLE_CLIENT_ID = "0123456789abcdef0123456789abcdef0123456789abc.apps.googleusercontent.com" }
 route = "go-dev.example.com/*"
 kv_namespaces = [
 	 { binding = "REDIRECTS", id = "0123456789abcdef0123456789abcdef", preview_id = "0123456789abcdef0123456789abcdef"  }
@@ -12,7 +12,7 @@ kv_namespaces = [
 
 [env.production]
 name = "url-shortener"
-vars = { ENVIRONMENT = "production" }
+vars = { ENVIRONMENT = "production", GOOGLE_CLIENT_ID = "0123456789abcdef0123456789abcdef0123456789abc.apps.googleusercontent.com" }
 route = "go.example.com/*"
 kv_namespaces = [
 	 { binding = "REDIRECTS", id = "fedcba9876543210fedcba9876543210" }
