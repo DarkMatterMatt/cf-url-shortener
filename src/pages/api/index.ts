@@ -1,8 +1,13 @@
-import { createResponse, status404 } from "./responses";
+import { createResponse, status403, status404 } from "./responses";
 import { handleRequest as createPage } from './create';
 import { handleRequest as deletePage } from './delete';
+import { isValidJwt } from "../../helpers";
 
 export const handleRequest: NestedHandler = async (req, path) => {
+    if (!isValidJwt(req)) {
+        return status403(req);
+    }
+
     if (path === '' || path === "/") {
         return createResponse({
             status: "success",
