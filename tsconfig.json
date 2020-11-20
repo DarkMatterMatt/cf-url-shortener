@@ -11,7 +11,11 @@
         "sourceMap": true,
         "esModuleInterop": true,
         "typeRoots": ["node_modules/@types", "src/types"],
-        "types": ["@cloudflare/workers-types"]
+        "types": ["@cloudflare/workers-types"],
+        "baseUrl": ".",
+        "paths": {
+            "~/*": ["src/*"]
+        }
     },
     "include": [
         "./src/*.ts",

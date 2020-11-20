@@ -1,4 +1,4 @@
-import { getRedirect } from "../../db";
+import { getRedirect } from "~/db";
 
 export const handleRequest: NestedHandler = async (req, path) => {
     const shortName = path.slice("/".length);

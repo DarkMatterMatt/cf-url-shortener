@@ -12,6 +12,9 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
         plugins: [],
+        alias: {
+            ["~"]: path.resolve(`${__dirname}/src`),
+        },
     },
     module: {
         rules: [

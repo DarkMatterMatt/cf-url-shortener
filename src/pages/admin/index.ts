@@ -1,4 +1,4 @@
-import { stringTemplate } from "../../helpers";
+import { stringTemplate } from "~/helpers";
 import indexHtml from "./index.html";
 
 export const handleRequest: NestedHandler = async (req, path) => {
