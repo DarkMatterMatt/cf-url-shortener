@@ -1,3 +1,5 @@
+export * from "./validators";
+
 declare const REDIRECTS: KVNamespace;
 
 interface ListRedirectsResult {
