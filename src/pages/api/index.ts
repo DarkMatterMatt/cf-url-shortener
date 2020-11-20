@@ -1,6 +1,7 @@
 import { createResponse, status403, status404 } from "./responses";
 import { handleRequest as createPage } from "./create";
 import { handleRequest as deletePage } from "./delete";
+import { handleRequest as listPage } from "./list";
 import { isValidJwt } from "~/helpers";
 
 export const handleRequest: NestedHandler = async (req, path) => {
@@ -19,6 +20,9 @@ export const handleRequest: NestedHandler = async (req, path) => {
     }
     if (path === "/delete" || path.startsWith("/delete/")) {
         return deletePage(req, path.slice("/delete".length));
+    }
+    if (path === "/list" || path.startsWith("/list/")) {
+        return listPage(req, path.slice("/list".length));
     }
     return status404(req);
 };
