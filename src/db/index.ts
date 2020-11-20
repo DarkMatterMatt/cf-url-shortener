@@ -15,10 +15,10 @@ export async function getRedirect(shortName: string): Promise<string | null> {
 
 export async function setRedirect(shortName: string, url: URL): Promise<void> {
     return REDIRECTS.put(shortName, url.href, {
-        metadata: ({
+        metadata: {
             version: 1,
             createdAt: Date.now(),
-        } as RedirectMetadata),
+        } as RedirectMetadata,
     });
 }
 
@@ -26,8 +26,10 @@ export async function deleteRedirect(shortName: string): Promise<void> {
     return REDIRECTS.delete(shortName);
 }
 
-export async function listRedirects(cursor?: string): Promise<ListRedirectsResult> {
-    return REDIRECTS.list({
+export async function listRedirects(
+    cursor?: string
+): Promise<ListRedirectsResult> {
+    return (REDIRECTS.list({
         cursor,
-    }) as unknown as ListRedirectsResult;
+    }) as unknown) as ListRedirectsResult;
 }

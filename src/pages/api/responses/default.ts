@@ -1,6 +1,4 @@
-type ApiResponse = (
-    options: ApiError | ApiSuccess,
-) => Promise<Response>;
+type ApiResponse = (options: ApiError | ApiSuccess) => Promise<Response>;
 
 export const createResponse: ApiResponse = async (options) => {
     if (options.status === "success") {
