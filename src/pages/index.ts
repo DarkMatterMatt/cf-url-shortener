@@ -1,6 +1,7 @@
 import { handleRequest as apiPage } from "./api";
 import { handleRequest as adminPage } from "./admin";
 import { handleRequest as redirectPage } from "./redirect";
+import { createResponse } from "./api/responses";
 
 const rootPage: NestedHandler = async (req, path) => {
     return new Response(`Welcome, path: ${path}`);
@@ -23,7 +24,16 @@ export const handleRequest: NestedHandler = async (req, path) => {
     return redirectPage(req, path);
 };
 
-addEventListener("fetch", (event) => {
+addEventListener("fetch", async (event) => {
     const url = new URL(event.request.url);
-    event.respondWith(handleRequest(event.request, url.pathname));
+    event.respondWith(
+        handleRequest(event.request, url.pathname).catch((e) =>
+            createResponse({
+                status: "error",
+                message: `Internal Server Error`,
+                errorDetails: `${e}`,
+                httpCode: 500,
+            })
+        )
+    );
 });
