@@ -21,11 +21,11 @@ export const handleRequest: NestedHandler = async (req, path) => {
             url,
         };
     }
-    catch (e: Error) {
+    catch (e: unknown) {
         return createResponse({
             status: "error",
             httpCode: 400,
-            message: e.message,
+            message: e instanceof Error ? e.message : "",
         });
     }
 

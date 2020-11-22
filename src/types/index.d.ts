@@ -15,14 +15,25 @@ type ApiError = {
     status: "error";
     message: string;
     httpCode: number;
+    [x: string]: any;
 };
 
 type ApiSuccess = {
     status: "success";
     result: string | number | Record<string, any>;
+    [x: string]: any;
 };
 
 interface RedirectMetadata {
     version: number;
     createdAt: number;
+}
+
+interface Auth {
+    email: string;
+    name: string;
+    family_name: string;
+    given_name: string;
+    locale: string;
+    picture: string;
 }

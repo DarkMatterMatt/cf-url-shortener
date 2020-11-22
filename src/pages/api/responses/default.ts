@@ -1,4 +1,4 @@
-type ApiResponse = (options: ApiError | ApiSuccess) => Response;
+type ApiResponse = (options: ApiError | ApiSuccess) => Promise<Response>;
 
 export const createResponse: ApiResponse = async (options) => {
     return new Response(JSON.stringify(options), {

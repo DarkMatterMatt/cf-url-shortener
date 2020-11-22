@@ -6,7 +6,7 @@
 export function asyncMap<T, U>(
     arr: T[],
     fn: (value: T, index: number, array: T[]) => Promise<U>
-): U[] {
+): Promise<U[]> {
     return Promise.all(
         arr.map(async (item, index) => await fn(item, index, arr))
     );
