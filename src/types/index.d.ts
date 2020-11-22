@@ -29,6 +29,10 @@ type ApiSuccess = {
     [x: string]: any;
 };
 
+interface Redirect extends RedirectMetadata {
+    shortName: string;
+}
+
 interface RedirectMetadata {
     version: number;
     createdAt: number;
