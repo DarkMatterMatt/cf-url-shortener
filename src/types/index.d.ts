@@ -31,6 +31,7 @@ type ApiSuccess = {
 
 interface Redirect extends RedirectMetadata {
     shortName: string;
+    url: string;
 }
 
 interface RedirectMetadata {

@@ -1,3 +1,5 @@
+import { asyncMap } from "~/helpers/array";
+
 export * from "./validators";
 
 declare const REDIRECTS: KVNamespace;
@@ -21,7 +23,7 @@ export async function setRedirect(shortName: string, url: URL, createdBy: string
 
     await REDIRECTS.put(shortName, url.href, { metadata });
 
-    return { shortName, ...metadata };
+    return { shortName, url: url.href, ...metadata };
 }
 
 export async function deleteRedirect(shortName: string): Promise<void> {
@@ -33,9 +35,11 @@ export async function listRedirects(
 ): Promise<ListRedirectsResult> {
     const { keys, list_complete, cursor: newCursor } = await REDIRECTS.list({ cursor });
     return {
-        keys: keys.map(item => ({
+        keys: await asyncMap(keys, async item => ({
             shortName: item.name,
             ...(item.metadata as RedirectMetadata),
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            url: (await getRedirect(item.name))!,
         })),
         list_complete,
         cursor: newCursor,
