@@ -4,38 +4,55 @@
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="{{ GOOGLE_CLIENT_ID }}">
+    <style>
+        .show-when-signed-in {
+            display: none;
+        }
+        .signed-in .show-when-signed-in {
+            display: unset;
+        }
+        .signed-in .hide-when-signed-in {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <h1>URL Shortener</h1>
-    <p id="current-email">Not logged in</p>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <hr>
+    <p id="current-email">Not logged in</p>
 
-    <h2>Existing redirects</h2>
-    <div id="existing-redirects"></div>
-    <hr>
+    <div class="show-when-signed-in">
+        <hr>
+        <h2>Existing redirects</h2>
+        <div id="existing-redirects"></div>
 
-    <h2>Create redirect</h2>
-    <table>
-        <tbody>
-            <tr>
-                <td><label for="short">Shortened Name</label></td>
-                <td><input id="short"></td>
-            </tr>
-            <tr>
-                <td><label for="url">Original URL</label></td>
-                <td><input id="url"></td>
-            </tr>
-            <tr>
-                <td colspan="2"><button type="submit">Submit</button></td>
-            </tr>
-        </tbody>
-    </table>
+        <hr>
+        <h2>Create redirect</h2>
+        <form id="create-redirect">
+            <table>
+                <tbody>
+                    <tr>
+                        <td><label for="short">Shortened Name</label></td>
+                        <td><input id="short"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="url">Redirect URL</label></td>
+                        <td><input id="url"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit">Submit</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
     <script>
         let token, redirects, currentUserEmail;
 
+        const $body = document.body;
         const $currentEmail = document.getElementById("current-email");
         const $existingRedirects = document.getElementById("existing-redirects");
+        const $createRedirect = document.getElementById("create-redirect");
         const $short = document.getElementById("short");
         const $url = document.getElementById("url");
         
@@ -46,14 +63,23 @@
                 { title: "Shortened Name", field: "shortName", sorter: "string" },
                 { title: "Redirect URL", field: "url", sorter: "string" },
                 { title: "Created At", field: "createdAt", sorter: "string" },
-                { title: "Delete", field: "shortName", sorter: "string" },
+                { title: "Created By", field: "createdBy", sorter: "string" },
             ],
         });
 
-        function onSignIn(googleUser) {
+        async function onSignIn(googleUser) {
             token = googleUser.getAuthResponse().id_token;
             currentUserEmail = googleUser.getBasicProfile().getEmail();
+
+            const result = await queryApi("");
+            if (result.status !== "success") {
+                $body.classList.remove("signed-in");
+                $currentEmail.innerText = `Logged in as ${currentUserEmail}, but you don't have permission to use the admin portal`;
+                return;
+            }
             $currentEmail.innerText = `Logged in as ${currentUserEmail}`;
+            $body.classList.add("signed-in");
+            listRedirects();
         }
 
         function queryApi(path, data={}, method="GET") {
@@ -87,12 +113,7 @@
                 alert(result.message);
                 return;
             }
-            redirects.push({
-                shortName,
-                url,
-                createdAt: Date.now(),
-                createdBy: currentUserEmail,
-            });
+            redirects.push(result.result);
         }
 
         async function deleteRedirect(shortName) {
@@ -109,7 +130,7 @@
             }
         }
 
-        async function listRedirects(short) {
+        async function listRedirects() {
             const result = await queryApi("list");
             if (result.status !== "success") {
                 alert(result.message);
@@ -118,5 +139,10 @@
             redirects = result.result;
             table.setData(redirects);
         }
+
+        $createRedirect.addEventListener("submit", ev => {
+            ev.preventDefault();
+            createRedirect($short.value, $url.value);
+        });
     </script>
 </body>
