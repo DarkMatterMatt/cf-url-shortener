@@ -36,6 +36,47 @@ export async function isValidJwt(request: Request): Promise<boolean> {
     }
 }
 
+export async function getAuth(request: Request): Promise<Auth | Error> {
+    try {
+        const encodedToken = getJwtFromRequest(request);
+        if (encodedToken == null) {
+            return new Error("Token is missing");
+        }
+        const token = decodeJwt(encodedToken);
+
+        // check token fields
+        if (
+            !isValidJwtAudience(token) ||
+            !isValidJwtExpiry(token) ||
+            !isValidJwtIssuer(token) ||
+            !(await isValidJwtSignature(token))
+        ) {
+            return new Error("Invalid token");
+        }
+
+        const {
+            email,
+            name,
+            family_name,
+            given_name,
+            locale,
+            picture,
+        } = token.payload;
+
+        return {
+            email,
+            name,
+            family_name,
+            given_name,
+            locale,
+            picture,
+        };
+    }
+    catch (e) {
+        return new Error("Invalid token");
+    }
+}
+
 function getJwtFromRequest(request: Request): string | null {
     const authHeader = request.headers.get("Authorization");
     if (!authHeader || authHeader.substring(0, 6) !== "Bearer") {

@@ -6,7 +6,7 @@ interface CreateParams {
     url: URL;
 }
 
-export const handleRequest: NestedHandler = async (req, path) => {
+export const handleRequest: AuthNestedHandler = async (req, path) => {
     let params: CreateParams;
 
     try {
@@ -29,7 +29,7 @@ export const handleRequest: NestedHandler = async (req, path) => {
         });
     }
 
-    await setRedirect(params.shortName, params.url);
+    await setRedirect(params.shortName, params.url, `${req.auth.name} <${req.auth.email}>`);
 
     return createResponse({
         status: "success",

@@ -15,11 +15,12 @@ export async function getRedirect(shortName: string): Promise<string | null> {
     return REDIRECTS.get(shortName);
 }
 
-export async function setRedirect(shortName: string, url: URL): Promise<void> {
+export async function setRedirect(shortName: string, url: URL, createdBy: string): Promise<void> {
     return REDIRECTS.put(shortName, url.href, {
         metadata: {
             version: 1,
             createdAt: Date.now(),
+            createdBy,
         } as RedirectMetadata,
     });
 }

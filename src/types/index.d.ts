@@ -11,6 +11,11 @@ type NestedHandler = (
     remainingPath: string,
 ) => Promise<Response>;
 
+type AuthNestedHandler = (
+    request: AuthRequest,
+    remainingPath: string,
+) => Promise<Response>;
+
 type ApiError = {
     status: "error";
     message: string;
@@ -27,6 +32,7 @@ type ApiSuccess = {
 interface RedirectMetadata {
     version: number;
     createdAt: number;
+    createdBy: string;
 }
 
 interface Auth {
@@ -36,4 +42,8 @@ interface Auth {
     given_name: string;
     locale: string;
     picture: string;
+}
+
+interface AuthRequest extends Request {
+    auth: Auth;
 }
