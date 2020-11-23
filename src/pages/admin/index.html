@@ -24,6 +24,7 @@
     <div class="show-when-signed-in">
         <hr>
         <h2>Existing redirects</h2>
+        <p>Click on a row to delete the redirect</p>
         <div id="existing-redirects"></div>
 
         <hr>
@@ -65,6 +66,7 @@
                 { title: "Created At", field: "createdAt", sorter: "string" },
                 { title: "Created By", field: "createdBy", sorter: "string" },
             ],
+            rowClick: onRowClick,
         });
 
         async function onSignIn(googleUser) {
@@ -138,6 +140,19 @@
             }
             redirects = result.result;
             table.setData(redirects);
+        }
+
+        async function onRowClick(ev, row) {
+            const redirect = row.getData();
+            const { shortName } = redirect;
+
+            const response = prompt(`Confirm your action by entering '${shortName}' in the prompt below.`);
+            if (shortName.toLowerCase() === response.toLowerCase()) {
+                await deleteRedirect(shortName);
+                return;
+            }
+
+            alert("Incorrect, no change was made.")
         }
 
         $createRedirect.addEventListener("submit", ev => {
