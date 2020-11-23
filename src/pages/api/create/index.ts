@@ -1,4 +1,4 @@
-import { parseShortName, setRedirect } from "~/db";
+import { getRedirect, parseShortName, setRedirect } from "~/db";
 import { createResponse } from "../responses";
 
 interface CreateParams {
@@ -16,6 +16,10 @@ export const handleRequest: AuthNestedHandler = async (req, path) => {
         if (shortName instanceof Error) {
             throw shortName;
         }
+        if (await getRedirect(shortName) !== null) {
+            throw new Error("Provided shortName is already in use.");
+        }
+
         params = {
             shortName,
             url,
