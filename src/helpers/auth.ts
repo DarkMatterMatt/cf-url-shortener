@@ -9,31 +9,14 @@ interface DecodedJWT {
     };
 }
 
+export function getAuthorizedEmailRegex(): RegExp {
+    return new RegExp(AUTHORIZED_EMAIL_REGEX, "iu");
+}
+
 async function getGoogleSignatures(): Promise<JsonWebKey[]> {
     const response = await fetch("https://www.googleapis.com/oauth2/v3/certs");
     const json = await response.json();
     return (json.keys as unknown) as JsonWebKey[];
-}
-
-export async function isValidJwt(request: Request): Promise<boolean> {
-    try {
-        const encodedToken = getJwtFromRequest(request);
-        if (encodedToken == null) {
-            return false;
-        }
-        const token = decodeJwt(encodedToken);
-
-        // check token fields
-        return (
-            isValidJwtAudience(token) &&
-            isValidJwtExpiry(token) &&
-            isValidJwtIssuer(token) &&
-            (await isValidJwtSignature(token))
-        );
-    }
-    catch (e) {
-        return false;
-    }
 }
 
 export async function getAuth(request: Request): Promise<Auth | Error> {
@@ -62,6 +45,10 @@ export async function getAuth(request: Request): Promise<Auth | Error> {
             locale,
             picture,
         } = token.payload;
+
+        if (!isValidEmail(email)) {
+            throw new Error(`Permission denied, try a different email address`);
+        }
 
         return {
             email,
@@ -106,6 +93,10 @@ function decodeJwt(encodedToken: string): DecodedJWT {
 function isValidJwtAudience(token: DecodedJWT): boolean {
     // TODO
     return true;
+}
+
+function isValidEmail(email: string): boolean {
+    return getAuthorizedEmailRegex().test(email);
 }
 
 function isValidJwtExpiry(token: DecodedJWT): boolean {
