@@ -29,7 +29,11 @@ export const handleRequest: AuthNestedHandler = async (req, path) => {
         });
     }
 
-    const result = await setRedirect(params.shortName, params.url, `${req.auth.name} <${req.auth.email}>`);
+    const result = await setRedirect(
+        params.shortName,
+        params.url,
+        `${req.auth.name} <${req.auth.email}>`
+    );
 
     return createResponse({
         status: "success",

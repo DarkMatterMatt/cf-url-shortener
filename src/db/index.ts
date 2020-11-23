@@ -14,7 +14,11 @@ export async function getRedirect(shortName: string): Promise<string | null> {
     return REDIRECTS.get(shortName);
 }
 
-export async function setRedirect(shortName: string, url: URL, createdBy: string): Promise<Redirect> {
+export async function setRedirect(
+    shortName: string,
+    url: URL,
+    createdBy: string
+): Promise<Redirect> {
     const metadata: RedirectMetadata = {
         version: 1,
         createdAt: Date.now(),
@@ -33,9 +37,11 @@ export async function deleteRedirect(shortName: string): Promise<void> {
 export async function listRedirects(
     cursor?: string
 ): Promise<ListRedirectsResult> {
-    const { keys, list_complete, cursor: newCursor } = await REDIRECTS.list({ cursor });
+    const { keys, list_complete, cursor: newCursor } = await REDIRECTS.list({
+        cursor,
+    });
     return {
-        keys: await asyncMap(keys, async item => ({
+        keys: await asyncMap(keys, async (item) => ({
             shortName: item.name,
             ...(item.metadata as RedirectMetadata),
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
