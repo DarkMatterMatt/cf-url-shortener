@@ -16,7 +16,7 @@ export const handleRequest: AuthNestedHandler = async (req, path) => {
         if (shortName instanceof Error) {
             throw shortName;
         }
-        if (await getRedirect(shortName) !== null) {
+        if ((await getRedirect(shortName)) != null) {
             throw new Error("Provided shortName is already in use.");
         }
 
