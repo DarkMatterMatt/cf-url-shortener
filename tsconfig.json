@@ -10,8 +10,14 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "esModuleInterop": true,
-        "typeRoots": ["node_modules/@types", "src/types"],
-        "types": ["@cloudflare/workers-types"],
+        "typeRoots": [
+            "node_modules/@types",
+            "src/types"
+        ],
+        "types": [
+            "@cloudflare/workers-types",
+            "mocha"
+        ],
         "baseUrl": ".",
         "paths": {
             "~/*": ["src/*"]
