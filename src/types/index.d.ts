@@ -3,6 +3,7 @@ declare module "*.html";
 // environmental variables
 declare const GOOGLE_CLIENT_ID: string;
 declare const ENVIRONMENT: "dev" | "production";
+declare const AUTHORIZED_EMAIL_REGEX: string;
 
 type Handler = (request: Request) => Promise<Response>;
 

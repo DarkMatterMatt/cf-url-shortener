@@ -1,4 +1,4 @@
-import { asyncMap } from "~/helpers/array";
+import { asyncMap } from "~/helpers";
 
 export * from "./validators";
 

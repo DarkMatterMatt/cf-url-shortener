@@ -12,6 +12,7 @@ kv_namespaces = [
 [vars]
 ENVIRONMENT = "dev"
 GOOGLE_CLIENT_ID = "0123456789abcdef0123456789abcdef0123456789abc.apps.googleusercontent.com"
+AUTHORIZED_EMAIL_REGEX = "@gmail.com$"
 
 [env.production]
 name = "url-shortener"
@@ -23,3 +24,4 @@ kv_namespaces = [
 [env.production.vars]
 ENVIRONMENT = "production"
 GOOGLE_CLIENT_ID = "0123456789abcdef0123456789abcdef0123456789abc.apps.googleusercontent.com"
+AUTHORIZED_EMAIL_REGEX = "@gmail.com$"
