@@ -2,6 +2,17 @@ export function parseShortName(shortName: any): string | Error {
     if (typeof shortName !== "string") {
         return new Error("shortName must be a string");
     }
-    // TODO: normalize string
-    return shortName;
+    return normalizeRedirect(shortName);
+}
+
+/**
+ * Normalize redirect identifier.
+ * @returns lowercase identifier, without whitespace or symbols
+ */
+export function normalizeRedirect(s: string): string {
+    return s
+        .toLowerCase()
+        .trim()
+        .replace(/[\s-]+/g, "-")
+        .replace(/[^\w-]/g, "");
 }

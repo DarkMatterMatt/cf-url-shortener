@@ -8,7 +8,7 @@
         "dev": "cross-env NODE_ENV=development npm run build",
         "format": "prettier-eslint --write \"%INIT_CWD%/**/*.{ts,js,css,json,md}\" && eslint --fix src",
         "send": "wrangler publish",
-        "send-prod": "wrangler publish --env production",
+        "send-prod": "tsc && npm test && wrangler publish --env production",
         "test": "ts-mocha --paths \"src/**/*.spec.ts\""
     },
     "author": "Matt Moran",
