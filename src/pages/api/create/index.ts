@@ -1,6 +1,8 @@
 import { getRedirect, parseShortName, setRedirect } from "~/db";
 import { createResponse } from "../responses";
 
+const RESERVED_PATHS = ["admin", "api"];
+
 interface CreateParams {
     shortName: string;
     url: URL;
@@ -16,8 +18,11 @@ export const handleRequest: AuthNestedHandler = async (req, path) => {
         if (shortName instanceof Error) {
             throw shortName;
         }
+        if (RESERVED_PATHS.includes(shortName)) {
+            throw new Error("Provided shortName is reserved");
+        }
         if ((await getRedirect(shortName)) != null) {
-            throw new Error("Provided shortName is already in use.");
+            throw new Error("Provided shortName is already in use");
         }
 
         params = {
