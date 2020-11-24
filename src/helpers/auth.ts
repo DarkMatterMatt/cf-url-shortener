@@ -91,8 +91,7 @@ function decodeJwt(encodedToken: string): DecodedJWT {
 }
 
 function isValidJwtAudience(token: DecodedJWT): boolean {
-    // TODO
-    return true;
+    return token.payload.aud === GOOGLE_CLIENT_ID;
 }
 
 function isValidEmail(email: string): boolean {
