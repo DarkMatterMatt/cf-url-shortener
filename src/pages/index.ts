@@ -2,9 +2,20 @@ import { handleRequest as apiPage } from "./api";
 import { handleRequest as adminPage } from "./admin";
 import { handleRequest as redirectPage } from "./redirect";
 import { createResponse } from "./api/responses";
+import defaultHtml from "./default.html";
+import { getRedirect } from "~/db";
 
 const rootPage: NestedHandler = async (req, path) => {
-    return new Response(`Welcome, path: ${path}`);
+    const result = await getRedirect("/");
+    if (result != null) {
+        return Response.redirect(result);
+    }
+
+    return new Response(defaultHtml, {
+        headers: {
+            "content-type": "text/html;charset=UTF-8",
+        },
+    });
 };
 
 export const handleRequest: NestedHandler = async (req, path) => {
