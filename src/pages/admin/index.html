@@ -4,7 +4,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
+    <script src="https://unpkg.com/moment@2.29.1/min/moment.min.js"></script>
+    <script src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="{{ GOOGLE_CLIENT_ID }}">
     <style>
@@ -30,7 +31,6 @@
     <div class="show-when-signed-in">
         <hr>
         <h2>Existing redirects</h2>
-        <p>Click on a row to delete the redirect</p>
         <div id="existing-redirects"></div>
 
         <hr>
@@ -63,16 +63,18 @@
         const $short = document.getElementById("short");
         const $url = document.getElementById("url");
         
+        const formatDate = cell => moment(cell.getValue()).format("YYYY-MM-DD hh:mm:ss");
+
         const table = new Tabulator($existingRedirects, {
             reactiveData: true,
             index: "shortName",
             columns: [
                 { title: "Shortened Name", field: "shortName", sorter: "string" },
-                { title: "Redirect URL", field: "url", sorter: "string" },
-                { title: "Created At", field: "createdAt", sorter: "string" },
+                { title: "Redirect URL", field: "url", sorter: "string", cellClick: onRowRedirectClick },
+                { title: "Created At", field: "createdAt", formatter: formatDate, sorter: "string" },
                 { title: "Created By", field: "createdBy", sorter: "string" },
+                { title: "Delete", formatter: "buttonCross", hozAlign: "center", cellClick: onRowDeleteClick, headerSort: false },
             ],
-            rowClick: onRowClick,
         });
 
         async function onSignIn(googleUser) {
@@ -119,9 +121,10 @@
             }, "POST");
             if (result.status !== "success") {
                 alert(result.message);
-                return;
+                return false;
             }
             redirects.push(result.result);
+            return true;
         }
 
         async function deleteRedirect(shortName) {
@@ -130,29 +133,35 @@
             }, "POST");
             if (result.status !== "success") {
                 alert(result.message);
-                return;
+                return false;
             }
             const index = redirects.findIndex(item => item.shortName === shortName);
             if (index > -1) {
                 redirects.splice(index, 1);
             }
+            return true;
         }
 
         async function listRedirects() {
             const result = await queryApi("list");
             if (result.status !== "success") {
                 alert(result.message);
-                return;
+                return false;
             }
             redirects = result.result;
             table.setData(redirects);
+            return true;
         }
 
-        async function onRowClick(ev, row) {
-            const redirect = row.getData();
+        async function onRowDeleteClick(ev, cell) {
+            const redirect = cell.getRow().getData();
             const { shortName } = redirect;
 
-            const response = prompt(`Confirm your action by entering '${shortName}' in the prompt below.`);
+            const response = prompt(`To delete the redirect, enter '${shortName}' in the prompt below.`);
+            if (response == null) {
+                return;
+            }
+
             if (shortName.toLowerCase() === response.toLowerCase()) {
                 await deleteRedirect(shortName);
                 return;
@@ -161,9 +170,19 @@
             alert("Incorrect, no change was made.")
         }
 
-        $createRedirect.addEventListener("submit", ev => {
+        function onRowRedirectClick(ev, cell) {
+            const redirect = cell.getRow().getData();
+            const { url } = redirect;
+            window.open(url, "_blank").focus();
+        }
+
+        $createRedirect.addEventListener("submit", async ev => {
             ev.preventDefault();
-            createRedirect($short.value, $url.value);
+            const success = await createRedirect($short.value, $url.value);
+            if (success) {
+                $short.value = "";
+                $url.value = "";
+            }
         });
     </script>
 </body>
