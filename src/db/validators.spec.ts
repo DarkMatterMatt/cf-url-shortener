@@ -50,6 +50,32 @@ describe("parseShortName", () => {
         expect(result).equal("ab-c");
     });
 
+    it("contains only symbols", () => {
+        const result = parseShortName("#$%");
+        assert(result instanceof Error);
+        expect(result.toString()).equal(
+            "Error: shortName must contain at least one alpha-numeric character"
+        );
+    });
+
+    it("contains no alpha-numeric characters", () => {
+        const result = parseShortName("#  $-%\t");
+        assert(result instanceof Error);
+        expect(result.toString()).equal(
+            "Error: shortName must contain at least one alpha-numeric character"
+        );
+    });
+
+    it("is a blank string (special case)", () => {
+        const result = parseShortName("");
+        expect(result).equal("/");
+    });
+
+    it("is a single forward slash (special case)", () => {
+        const result = parseShortName("/");
+        expect(result).equal("/");
+    });
+
     const errorCases = [
         null,
         undefined,
