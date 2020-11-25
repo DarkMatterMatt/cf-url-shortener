@@ -26,9 +26,11 @@
 <body>
     <h1>URL Shortener</h1>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <p id="current-email">Not logged in</p>
+    <p id="current-email"></p>
 
     <div class="show-when-signed-in">
+        <a href="#" onclick="signOut()">Sign out</a>
+
         <hr>
         <h2>Existing redirects</h2>
         <div id="existing-redirects"></div>
@@ -90,6 +92,12 @@
             $currentEmail.innerText = `Logged in as ${currentUserEmail}`;
             $body.classList.add("signed-in");
             listRedirects();
+        }
+
+        async function signOut() {
+            await gapi.auth2.getAuthInstance().signOut();
+            $body.classList.remove("signed-in");
+            $currentEmail.innerText = "";
         }
 
         function queryApi(path, data={}, method="GET") {
