@@ -5,7 +5,7 @@ import { createResponse } from "./api/responses";
 import defaultHtml from "./default.html";
 import { getRedirect } from "~/db";
 
-const rootPage: NestedHandler = async (req, path) => {
+const rootPage: NestedHandler = async (_req, _path) => {
     const result = await getRedirect("/");
     if (result != null) {
         return Response.redirect(result);

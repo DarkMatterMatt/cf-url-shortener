@@ -1,7 +1,7 @@
 import { stringTemplate } from "~/helpers";
 import indexHtml from "./index.html";
 
-export const handleRequest: NestedHandler = async (req, path) => {
+export const handleRequest: NestedHandler = async (_req, _path) => {
     const html = stringTemplate(indexHtml, {
         GOOGLE_CLIENT_ID,
     });

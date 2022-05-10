@@ -16,7 +16,7 @@ export function getAuthorizedEmailRegex(): RegExp {
 async function getGoogleSignatures(): Promise<JsonWebKey[]> {
     const response = await fetch("https://www.googleapis.com/oauth2/v3/certs");
     const json = await response.json();
-    return (json.keys as unknown) as JsonWebKey[];
+    return json.keys;
 }
 
 export async function getAuth(request: Request): Promise<Auth | Error> {
@@ -37,14 +37,8 @@ export async function getAuth(request: Request): Promise<Auth | Error> {
             return new Error("Invalid token");
         }
 
-        const {
-            email,
-            name,
-            family_name,
-            given_name,
-            locale,
-            picture,
-        } = token.payload;
+        const { email, name, family_name, given_name, locale, picture } =
+            token.payload;
 
         if (!isValidEmail(email)) {
             throw new Error(`Permission denied, try a different email address`);

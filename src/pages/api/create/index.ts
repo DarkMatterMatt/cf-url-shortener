@@ -8,7 +8,7 @@ interface CreateParams {
     url: URL;
 }
 
-export const handleRequest: AuthNestedHandler = async (req, path) => {
+export const handleRequest: AuthNestedHandler = async (req, _path) => {
     let params: CreateParams;
 
     try {

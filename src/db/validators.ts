@@ -9,7 +9,9 @@ export function parseShortName(shortName: any): string | Error {
     }
     const normalized = normalizeRedirect(shortName);
     if (normalized === "" || normalized === "-") {
-        return new Error("shortName must contain at least one alpha-numeric character");
+        return new Error(
+            "shortName must contain at least one alpha-numeric character"
+        );
     }
     return normalized;
 }

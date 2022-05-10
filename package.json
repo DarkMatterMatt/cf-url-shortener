@@ -1,6 +1,6 @@
 {
     "name": "url-shortener",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "URL shortener",
     "main": "dist/worker.js",
     "scripts": {

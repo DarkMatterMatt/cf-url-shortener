@@ -1,7 +1,7 @@
 import { deleteRedirect, parseShortName } from "~/db";
 import { createResponse } from "../responses";
 
-export const handleRequest: NestedHandler = async (req, path) => {
+export const handleRequest: NestedHandler = async (req, _path) => {
     let shortName: string;
 
     try {

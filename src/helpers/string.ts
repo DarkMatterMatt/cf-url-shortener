@@ -10,8 +10,8 @@ export function stringTemplate(
     replacements: Record<string, string>
 ): string {
     const repl = objKeysToLowercase(replacements);
-    return str.replace(/\{\{\s*([0-9a-zA-Z_]+)\s*\}\}/g, (match, key_) => {
-        const key = key_.toLowerCase();
+    return str.replace(/\{\{\s*([0-9a-zA-Z_]+)\s*\}\}/g, (_match, key) => {
+        key = key.toLowerCase();
         const value = Object.prototype.hasOwnProperty.call(repl, key)
             ? repl[key]
             : null;

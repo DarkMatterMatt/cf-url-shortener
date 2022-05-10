@@ -1,6 +1,6 @@
 import { getRedirect, parseShortName } from "~/db";
 
-export const handleRequest: NestedHandler = async (req, path) => {
+export const handleRequest: NestedHandler = async (_req, path) => {
     const shortName = parseShortName(path.slice("/".length));
     if (shortName instanceof Error) {
         return new Response(`Invalid redirect: ${shortName}`);

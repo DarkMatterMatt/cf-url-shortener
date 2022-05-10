@@ -7,7 +7,7 @@ declare const REDIRECTS: KVNamespace;
 interface ListRedirectsResult {
     keys: Redirect[];
     list_complete: boolean;
-    cursor: string;
+    cursor?: string;
 }
 
 export async function getRedirect(shortName: string): Promise<string | null> {
@@ -37,7 +37,11 @@ export async function deleteRedirect(shortName: string): Promise<void> {
 export async function listRedirects(
     cursor?: string
 ): Promise<ListRedirectsResult> {
-    const { keys, list_complete, cursor: newCursor } = await REDIRECTS.list({
+    const {
+        keys,
+        list_complete,
+        cursor: newCursor,
+    } = await REDIRECTS.list({
         cursor,
     });
     return {
