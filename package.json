@@ -4,11 +4,11 @@
     "description": "URL shortener",
     "main": "dist/worker.js",
     "scripts": {
-        "build": "webpack",
-        "dev": "cross-env NODE_ENV=development npm run build",
-        "format": "prettier-eslint --write \"%INIT_CWD%/**/*.{ts,js,css,json,md}\" && eslint --fix src",
+        "build": "tsc && cross-env NODE_ENV=development webpack",
+        "build:prod": "tsc && webpack",
+        "format": "prettier-eslint --write \"src/**/*.{ts,js,css,json,md}\" && eslint --fix src",
         "send": "wrangler publish",
-        "send-prod": "tsc && npm test && wrangler publish --env production",
+        "send:prod": "tsc && npm test && wrangler publish --env production",
         "test": "ts-mocha --paths \"src/**/*.spec.ts\""
     },
     "author": "Matt Moran",
